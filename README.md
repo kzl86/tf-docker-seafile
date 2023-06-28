@@ -1,92 +1,53 @@
-# tf-docker-seafile
+<!-- BEGIN_TF_DOCS -->
+## Requirements
 
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | 1.2.6 |
+| <a name="requirement_docker"></a> [docker](#requirement\_docker) | 2.19.0 |
 
+## Providers
 
-## Getting started
+No providers.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Modules
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_seafile_docker_container"></a> [seafile\_docker\_container](#module\_seafile\_docker\_container) | git::https://github.com/kzl86/tf-docker_container.git | v1.1.0 |
+| <a name="module_seafile_docker_image"></a> [seafile\_docker\_image](#module\_seafile\_docker\_image) | git::https://github.com/kzl86/tf-docker_image.git | v1.0.0 |
+| <a name="module_seafile_mariadb_docker_container"></a> [seafile\_mariadb\_docker\_container](#module\_seafile\_mariadb\_docker\_container) | git::https://github.com/kzl86/tf-docker_container.git | v1.1.0 |
+| <a name="module_seafile_mariadb_docker_image"></a> [seafile\_mariadb\_docker\_image](#module\_seafile\_mariadb\_docker\_image) | git::https://github.com/kzl86/tf-docker_image.git | v1.0.0 |
+| <a name="module_seafile_memcached_docker_container"></a> [seafile\_memcached\_docker\_container](#module\_seafile\_memcached\_docker\_container) | git::https://github.com/kzl86/tf-docker_container.git | v1.1.0 |
+| <a name="module_seafile_memcached_docker_image"></a> [seafile\_memcached\_docker\_image](#module\_seafile\_memcached\_docker\_image) | git::https://github.com/kzl86/tf-docker_image.git | v1.0.0 |
+| <a name="module_seafile_net"></a> [seafile\_net](#module\_seafile\_net) | git::https://github.com/kzl86/tf-docker_network.git | v1.0.0 |
 
-## Add your files
+## Resources
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+No resources.
 
-```
-cd existing_repo
-git remote add origin http://gitlab.lan/kzl/tf-docker-seafile.git
-git branch -M main
-git push -uf origin main
-```
+## Inputs
 
-## Integrate with your tools
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_seafile_container_name"></a> [seafile\_container\_name](#input\_seafile\_container\_name) | The name of the seafile container. | `string` | `"seafile"` | no |
+| <a name="input_seafile_data"></a> [seafile\_data](#input\_seafile\_data) | Host path for the seafile data. | `string` | `"/opt/seafile-data"` | no |
+| <a name="input_seafile_docker_image"></a> [seafile\_docker\_image](#input\_seafile\_docker\_image) | The name of the seafile docker image, including any tags or SHA256 repo digests. | `string` | `"seafileltd/seafile-mc:latest"` | no |
+| <a name="input_seafile_docker_network_name"></a> [seafile\_docker\_network\_name](#input\_seafile\_docker\_network\_name) | The name of the docker network for seafile | `string` | `"seafile-net"` | no |
+| <a name="input_seafile_environment"></a> [seafile\_environment](#input\_seafile\_environment) | Custom environment variables for seafile container. It will overwrite the module list if defined. | `list(string)` | `null` | no |
+| <a name="input_seafile_keep_locally"></a> [seafile\_keep\_locally](#input\_seafile\_keep\_locally) | If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation. | `bool` | `true` | no |
+| <a name="input_seafile_mariadb_container_name"></a> [seafile\_mariadb\_container\_name](#input\_seafile\_mariadb\_container\_name) | The name of the mariadb container. | `string` | `"seafile-mysql"` | no |
+| <a name="input_seafile_mariadb_data"></a> [seafile\_mariadb\_data](#input\_seafile\_mariadb\_data) | Host path for the mariadb data. | `string` | `"/opt/seafile-mysql/db"` | no |
+| <a name="input_seafile_mariadb_docker_image"></a> [seafile\_mariadb\_docker\_image](#input\_seafile\_mariadb\_docker\_image) | The name of the mariadb docker image, including any tags or SHA256 repo digests. | `string` | `"mariadb:10.6"` | no |
+| <a name="input_seafile_mariadb_environment"></a> [seafile\_mariadb\_environment](#input\_seafile\_mariadb\_environment) | Custom environment variables for mariadb container. It will overwrite the module list if defined. | `list(string)` | `null` | no |
+| <a name="input_seafile_mariadb_keep_locally"></a> [seafile\_mariadb\_keep\_locally](#input\_seafile\_mariadb\_keep\_locally) | If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation. | `bool` | `true` | no |
+| <a name="input_seafile_memcached_container_name"></a> [seafile\_memcached\_container\_name](#input\_seafile\_memcached\_container\_name) | The name of the memcached container. | `string` | `"seafile-memcached"` | no |
+| <a name="input_seafile_memcached_docker_image"></a> [seafile\_memcached\_docker\_image](#input\_seafile\_memcached\_docker\_image) | The name of the memcached docker image, including any tags or SHA256 repo digests. | `string` | `"memcached:1.6.18"` | no |
+| <a name="input_seafile_memcached_keep_locally"></a> [seafile\_memcached\_keep\_locally](#input\_seafile\_memcached\_keep\_locally) | If true, then the Docker image won't be deleted on destroy operation. If this is false, it will delete the image from the docker local storage on destroy operation. | `bool` | `true` | no |
+| <a name="input_seafile_port_443"></a> [seafile\_port\_443](#input\_seafile\_port\_443) | Host port for the internal port 443. | `string` | `"443"` | no |
+| <a name="input_seafile_port_80"></a> [seafile\_port\_80](#input\_seafile\_port\_80) | Host port for the internal port 80. | `string` | `"80"` | no |
 
-- [ ] [Set up project integrations](http://gitlab.lan/kzl/tf-docker-seafile/-/settings/integrations)
+## Outputs
 
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+No outputs.
+<!-- END_TF_DOCS -->
